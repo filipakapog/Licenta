@@ -82,7 +82,7 @@ public class EntityParser {
         String status = doc.getElementsByTagName("status")
                 .item(0)
                 .getTextContent();
-        System.out.println("----" + status + "----\n");
+        System.out.println("--[API STATUS]-- => " + status);
 
         NodeList nList = doc.getElementsByTagName("entity");
         for (int i = 0; i < nList.getLength(); i++) {
@@ -96,28 +96,24 @@ public class EntityParser {
                 String item = element.getElementsByTagName("text")
                         .item(0)
                         .getTextContent();
-                //System.out.println("--" + item +"--\n");
                 entity.setName(item);
 
                 // Setting Entity's type
                 item = element.getElementsByTagName("type")
                         .item(0)
                         .getTextContent();
-                //System.out.println("--" + item +"--\n");
                 entity.setType(item);
 
                 // Setting Entity's relevance
                 item = element.getElementsByTagName("relevance")
                         .item(0)
                         .getTextContent();
-                //System.out.println("--" + item +"--\n");
                 entity.setRelevance(Float.parseFloat(item));
 
                 // Setting Entity's count
                 item = element.getElementsByTagName("count")
                         .item(0)
                         .getTextContent();
-                //System.out.println("--" + item +"--\n");
                 entity.setCount(Integer.parseInt(item));
 
                 entities.add(entity);
