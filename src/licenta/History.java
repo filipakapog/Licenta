@@ -64,13 +64,15 @@ public class History {
 
     /**
      * Collects the list of history links from Chrome's history database and select only those which
-     * exceed a certain frequency threshold value.
+     * exceed a certain frequency threshold value. Adapted from http://goo.gl/8xAjur and
+     * http://goo.gl/5SBUoZ.
      * @param location the path to Chrome's history database
      * @return the list of history links which contain the URLs with associated Occurrences
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    private ArrayList<Link> getHistoryLinks(String location) throws ClassNotFoundException, SQLException {
+    private ArrayList<Link> getHistoryLinks(String location)
+            throws ClassNotFoundException, SQLException {
         ArrayList<Link> links = new ArrayList<Link>();
 
 
