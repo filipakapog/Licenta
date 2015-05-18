@@ -7,6 +7,10 @@ import java.util.ArrayList;
  * Created by filip on 16.05.2015.
  */
 
+
+/**
+ * Represents a link with information related to its access frequency and the url string.
+ */
 class Link {
     private String url;
     // The number of visits done on the the url
@@ -34,12 +38,17 @@ class Link {
     }
 }
 
+/**
+ * Represents the user history as an array of Links. It extract the links from a copy of
+ * Chrome's History DB, located on the user's computer.
+ */
 public class History {
 
-    // Represents the history of user navigation
+    // Represents the history of user navigation.
     private ArrayList<Link> links;
-    // The sqlite location of Chrome's history
+    // The sqlite DB location of Chrome's History DB copy.
     private String dbLocation;
+    private final int MIN_FREQ_VAL = 10;
 
     public ArrayList<Link> getLinks() {
         return links;
@@ -58,16 +67,17 @@ public class History {
     }
 
     public History(String dbLocation) throws SQLException, ClassNotFoundException {
-        this.dbLocation = dbLocation;
+        // Add the DB protocol preamble.
+        this.dbLocation = "jdbc:sqlite:" + dbLocation;
         this.links = getHistoryLinks(this.dbLocation);
     }
 
     /**
-     * Collects the list of history links from Chrome's history database and select only those which
+     * Collects the list of history links from Chrome's History DB copy and select only those which
      * exceed a certain frequency threshold value. Adapted from http://goo.gl/8xAjur and
      * http://goo.gl/5SBUoZ.
-     * @param location the path to Chrome's history database
-     * @return the list of history links which contain the URLs with associated Occurrences
+     * @param location the path to Chrome's History DB copy
+     * @return the list of history links which contain the URLs with associated occurrences
      * @throws ClassNotFoundException
      * @throws SQLException
      */
@@ -80,7 +90,8 @@ public class History {
         Connection connection = DriverManager.getConnection(location);
         Statement statement = connection.createStatement();
 
-        String sqlText = "SELECT * FROM urls WHERE visit_count >= 10;";
+        // Select only the links which exceed the frequency threshold value.
+        String sqlText = "SELECT * FROM urls WHERE visit_count >= " + MIN_FREQ_VAL + ";";
         ResultSet resultSet = statement.executeQuery(sqlText);
 
         Link link;

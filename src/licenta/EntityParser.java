@@ -16,8 +16,6 @@ class Entity {
     private float relevance;
     private int count;
 
-
-
     public Entity() {
         name = null;
         relevance = 0;
